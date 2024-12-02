@@ -3,7 +3,7 @@ def distance() -> dict:
     right_list: list[int] = []
     distance_list: list[int] = []
 
-    with open('day1.txt', 'r') as f:
+    with open('day1/day1.txt', 'r') as f:
         for line in f:
             left_list.append(int(line.split()[0]))
             right_list.append(int(line.split()[1]))
