@@ -7,7 +7,7 @@ def iterate_through_file() -> int:
 
 def generate_reports(input_levels) -> int:
     safe_result: bool = False
-    
+
     for x in range(len(input_levels)):
         check_levels: list = [y for y in input_levels]
         check_levels.pop(x)
@@ -25,7 +25,7 @@ def generate_reports(input_levels) -> int:
 
 def check_safety(levels) -> int:
     #Check adjacent levels differ by at least one and at most three:
-    for i,_ in enumerate(levels):
+    for i in range(len(levels)):
         if i == 0:
             continue
 
