@@ -1,9 +1,6 @@
-def do_or_dont():
+def do_or_dont(text_input):
     dey_do_doh_dont_dey_doh: bool = True
     fine_text_list: list = []
-    
-    with open('day3/day3.txt', 'r') as f:
-        text_input = f.read()
     
     while text_input:
         if dey_do_doh_dont_dey_doh:
@@ -42,8 +39,8 @@ def multiply(source_text):
     return sum(multiply_list)
 
 if __name__ == "__main__":
-    with open('day3/day3.txt', 'r') as f:
-        text_input = f.read().split("mul(")
-        print(f"Day 3 Part 1 answer: {multiply(text_input)}")
-
-    print(f"Day 3 Part 2 answer: {do_or_dont()}")
+    f = open('day3/day3.txt', 'r')
+    print(f"Day 3 Part 1 answer: {multiply(f.read().split("mul("))}")
+    f.seek(0)
+    print(f"Day 3 Part 2 answer: {do_or_dont(f.read())}")
+    f.close()
