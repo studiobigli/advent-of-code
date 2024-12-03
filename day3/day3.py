@@ -1,8 +1,7 @@
 def do_or_dont():
     dey_do_doh_dont_dey_doh: bool = True
     fine_text_list: list = []
-    multiply_list: list = []
-
+    
     with open('day3/day3.txt', 'r') as f:
         text_input = f.read()
     
@@ -20,9 +19,13 @@ def do_or_dont():
             break
     
     fine_text: str = "".join(fine_text_list)
-    split_by_mul: list = fine_text.split("mul(")
+    source_text: list = fine_text.split("mul(")
+    return multiply(source_text)
 
-    for bad_string in split_by_mul:
+def multiply(source_text):
+    multiply_list: list = []
+
+    for bad_string in source_text:
         new_number: int = 0
         
         if "," in bad_string[1:4]:
@@ -39,4 +42,8 @@ def do_or_dont():
     return sum(multiply_list)
 
 if __name__ == "__main__":
-    print(do_or_dont())
+    with open('day3/day3.txt', 'r') as f:
+        text_input = f.read().split("mul(")
+        print(f"Day 3 Part 1 answer: {multiply(text_input)}")
+
+    print(f"Day 3 Part 2 answer: {do_or_dont()}")
