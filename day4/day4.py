@@ -31,7 +31,16 @@ def part1():
             for row_pos, row in grid["rows"].items():
                 grid["columns"][x].append(row[x])
 
-    print(grid)
+        #Store diagonals from left to right in dictionary
+        for x in range(grid["total_rows"]):
+            check_pos_x, check_pos_y = x, 0
+            for y in range(grid["total_rows"]-x ):
+                if (check_pos_x <= grid["total_rows"]-1) and (check_pos_y <= grid["total_columns"]-1-x):
+                    print(check_pos_x, check_pos_y, grid["rows"][check_pos_x][check_pos_y])
+                    check_pos_x += 1
+                    check_pos_y += 1
+
+    # print(grid)
 
 
 
