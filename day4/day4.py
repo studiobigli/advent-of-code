@@ -1,8 +1,8 @@
 def part1():
     grid = {"rows": {},
             "columns": {},
-            "diagonal_l_to_r": {},
-            "diagonal_r_to_l": {},
+            "diagonal_tl_to_br": {},
+            "diagonal_bl_to_tr": {},
             "total_rows": 0,
             "total_columns": 0}
     
@@ -31,14 +31,25 @@ def part1():
             for row_pos, row in grid["rows"].items():
                 grid["columns"][x].append(row[x])
 
-        #Store diagonals from left to right in dictionary
+        #Store diagonals from topleft to bottomright in dictionary
         for x in range(grid["total_rows"]):
             check_pos_x, check_pos_y = x, 0
             for y in range(grid["total_rows"]-x ):
                 if (check_pos_x <= grid["total_rows"]-1) and (check_pos_y <= grid["total_columns"]-1-x):
-                    print(check_pos_x, check_pos_y, grid["rows"][check_pos_x][check_pos_y])
+                    # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
                     check_pos_x += 1
                     check_pos_y += 1
+
+        #Store diagonals from bottomleft to topright in dictionary
+        for x in range(grid["total_rows"]-1, -1, -1):
+            check_pos_x, check_pos_y, reverse_correction = x, 0, 139-x
+            for y in range(grid["total_rows"]-reverse_correction ):
+                if (check_pos_x >= 0) and (check_pos_y <= grid["total_columns"]-1-reverse_correction):
+                    print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
+                    check_pos_x -= 1
+                    check_pos_y += 1
+                    reverse_correction -= 1
+        
 
     # print(grid)
 
