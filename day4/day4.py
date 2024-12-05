@@ -1,8 +1,10 @@
 def part1():
     grid = {"rows": {},
             "columns": {},
-            "diagonal_tl_to_br": {},
-            "diagonal_bl_to_tr": {},
+            "diagonal_tlbr_x": {},
+            "diagonal_bltr_x": {},
+            "diagonal_tlbr_y": {},
+            "diagonal_bltr_y": {},
             "total_rows": 0,
             "total_columns": 0}
     
@@ -43,7 +45,22 @@ def part1():
                 diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
                 check_pos_x += 1
                 check_pos_y += 1
-        grid["diagonal_tl_to_br"][x] = "".join(diagonal_line)
+        grid["diagonal_tlbr_x"][x] = "".join(diagonal_line)
+    
+    for y in range(grid["total_rows"]):
+        check_pos_x, check_pos_y = 0, y
+        diagonal_line = []
+        for x in range(grid["total_rows"]-y ):
+            if (check_pos_x <= grid["total_rows"]-1) and (check_pos_y <= grid["total_columns"]-1-y):
+                # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
+                diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
+                check_pos_x += 1
+                check_pos_y += 1
+        grid["diagonal_tlbr_y"][y] = "".join(diagonal_line)
+
+    # print(grid["diagonal_tlbr_x"][0])
+    # print(grid["diagonal_tlbr_y"][0])
+    del grid["diagonal_tlbr_y"][0]
 
     #Store diagonals from bottomleft to topright in dictionary
     for x in range(grid["total_rows"]-1, -1, -1):
@@ -56,7 +73,21 @@ def part1():
                 check_pos_x -= 1
                 check_pos_y += 1
                 reverse_correction -= 1
-        grid["diagonal_bl_to_tr"][x] = "".join(diagonal_line)
+        grid["diagonal_bltr_x"][x] = "".join(diagonal_line)
+
+    for y in range(grid["total_rows"]):
+        check_pos_x, check_pos_y = 139, y
+        diagonal_line = []
+        for x in range(grid["total_rows"] ):
+            if (check_pos_x >= 0) and (check_pos_y <= grid["total_columns"]-1):
+                # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
+                diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
+                check_pos_x -= 1
+                check_pos_y += 1
+                reverse_correction -= 1
+        grid["diagonal_bltr_y"][y] = "".join(diagonal_line)
+
+    del grid["diagonal_bltr_y"][139]
 
     # Join column keypair lists into strings
     for key, _ in grid["columns"].items():
@@ -64,7 +95,7 @@ def part1():
 
     #Iterate through all strings looking for XMAS entries, forwards and backwards
 
-    for dict_key in ["rows", "columns", "diagonal_tl_to_br", "diagonal_bl_to_tr"]:
+    for dict_key in ["rows", "columns", "diagonal_tlbr_x", "diagonal_bltr_x", "diagonal_tlbr_y", "diagonal_bltr_y"]:
         for _,line in grid[dict_key].items(): 
             count += check_line(line)
 
@@ -75,8 +106,6 @@ def part1():
 
 def check_line(line):
     xmas_count = 0
-    if len(line) < 4:
-        return 0
     while line:
         if line.partition("XMAS")[1] == "XMAS":
             xmas_count += 1
