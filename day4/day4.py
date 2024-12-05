@@ -1,4 +1,4 @@
-def part1():
+def build_grid():
     grid = {"rows": {},
             "columns": {},
             "diagonal_tlbr_x": {},
@@ -7,8 +7,6 @@ def part1():
             "diagonal_bltr_y": {},
             "total_rows": 0,
             "total_columns": 0}
-    
-    count = 0
     
     with open (r'day4/day4.txt', 'r') as f:
         
@@ -84,9 +82,17 @@ def part1():
     for key, _ in grid["columns"].items():
         grid["columns"][key] = "".join(grid["columns"][key])
 
-    #Iterate through all strings looking for XMAS entries, forwards and backwards
+    return grid
 
-    for dict_key in ["rows", "columns", "diagonal_tlbr_x", "diagonal_bltr_x", "diagonal_tlbr_y", "diagonal_bltr_y"]:
+def part1():
+    count = 0
+    grid = build_grid()
+    for dict_key in ["rows", 
+                     "columns", 
+                     "diagonal_tlbr_x", 
+                     "diagonal_bltr_x", 
+                     "diagonal_tlbr_y", 
+                     "diagonal_bltr_y"]:
         for _,line in grid[dict_key].items(): 
             count += check_line(line)
 
@@ -105,6 +111,36 @@ def check_line(line):
             break
     return xmas_count
 
-if __name__ == "__main__":
+def part2():
+    count = 0
+    grid = build_grid()
 
+    for line_idx, line in grid["rows"].items():
+        for ltr_idx, letter in enumerate(line):
+            chk_letters = []
+            if letter == "A":
+                if ltr_idx-1 == int(-1): # Prevent grabbing letters from the end of the row
+                    continue
+                try:
+                    if (grid["rows"][line_idx-1][ltr_idx-1] in "MS") and \
+                        (grid["rows"][line_idx-1][ltr_idx+1] in "MS") and \
+                        (grid["rows"][line_idx+1][ltr_idx-1] in "MS") and \
+                        (grid["rows"][line_idx+1][ltr_idx+1] in "MS"):
+                        chk_letters.append(grid["rows"][line_idx-1][ltr_idx-1]) # Add TL letter
+                        chk_letters.append(grid["rows"][line_idx][ltr_idx])     # Add current letter
+                        chk_letters.append(grid["rows"][line_idx+1][ltr_idx+1]) # Add BR letter
+
+                        chk_letters.append(grid["rows"][line_idx+1][ltr_idx-1]) # Add BL letter
+                        chk_letters.append(grid["rows"][line_idx][ltr_idx])     # Add current letter
+                        chk_letters.append(grid["rows"][line_idx-1][ltr_idx+1]) # Add TR letter
+                except:
+                    continue
+
+            if "".join(chk_letters) in ["SAMSAM", "MASMAS", "SAMMAS", "MASSAM"]:
+                count += 1
+
+    return count
+
+if __name__ == "__main__":
     print(f"Answer for Day 4 Part 1: {part1()}")
+    print(f"Answer for Day 4 Part 2: {part2()}")
