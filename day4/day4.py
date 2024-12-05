@@ -41,7 +41,6 @@ def part1():
         diagonal_line = []
         for y in range(grid["total_rows"]-x ):
             if (check_pos_x <= grid["total_rows"]-1) and (check_pos_y <= grid["total_columns"]-1-x):
-                # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
                 diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
                 check_pos_x += 1
                 check_pos_y += 1
@@ -51,15 +50,11 @@ def part1():
         check_pos_x, check_pos_y = 0, y
         diagonal_line = []
         for x in range(grid["total_rows"]-y ):
-            if (check_pos_x <= grid["total_rows"]-1) and (check_pos_y <= grid["total_columns"]-1-y):
-                # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
+            if (check_pos_x <= grid["total_rows"]-1) and (check_pos_y <= grid["total_columns"]-1):
                 diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
                 check_pos_x += 1
                 check_pos_y += 1
         grid["diagonal_tlbr_y"][y] = "".join(diagonal_line)
-
-    # print(grid["diagonal_tlbr_x"][0])
-    # print(grid["diagonal_tlbr_y"][0])
     del grid["diagonal_tlbr_y"][0]
 
     #Store diagonals from bottomleft to topright in dictionary
@@ -68,7 +63,6 @@ def part1():
         diagonal_line = []
         for y in range(grid["total_rows"]-reverse_correction ):
             if (check_pos_x >= 0) and (check_pos_y <= grid["total_columns"]-1-reverse_correction):
-                # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
                 diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
                 check_pos_x -= 1
                 check_pos_y += 1
@@ -80,16 +74,13 @@ def part1():
         diagonal_line = []
         for x in range(grid["total_rows"] ):
             if (check_pos_x >= 0) and (check_pos_y <= grid["total_columns"]-1):
-                # print(f"X:{check_pos_x}, Y:{check_pos_y}, Letter: {grid["rows"][check_pos_x][check_pos_y]}")
                 diagonal_line.append(grid["rows"][check_pos_x][check_pos_y])
                 check_pos_x -= 1
                 check_pos_y += 1
                 reverse_correction -= 1
         grid["diagonal_bltr_y"][y] = "".join(diagonal_line)
+    del grid["diagonal_bltr_y"][0]
 
-    del grid["diagonal_bltr_y"][139]
-
-    # Join column keypair lists into strings
     for key, _ in grid["columns"].items():
         grid["columns"][key] = "".join(grid["columns"][key])
 
