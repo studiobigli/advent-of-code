@@ -13,8 +13,7 @@ def parse_input():
 
 def part1():
     rules, updates = parse_input()["rules"], parse_input()["updates"]
-    unordered_updates = []
-    count = int()
+    count, unordered_updates = int(), list()
 
     for update in updates:
         add_middle_page = True
@@ -58,9 +57,6 @@ def part2():
         count += int(update[int((len(update) -1)/2)])
 
     return count
-
-
-
 
 if __name__ == "__main__":
     print(f"Day 5 Part 1 Answer: {part1()["count"]}")
