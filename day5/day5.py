@@ -13,9 +13,27 @@ def parse_input():
 
 def part1():
     rules, updates = parse_input()["rules"], parse_input()["updates"]
+    count = int()
 
     for update in updates:
-        print(update)
+        add_middle_page = True
+
+        update_breakdown = {x: y for x,y in enumerate(update)}
+        for num in update_breakdown.values():
+            for rule in rules:
+                if num in rule and add_middle_page:
+                    if rule[0] in update_breakdown.values() and rule[1] in update_breakdown.values():
+                        if update.index(rule[0]) > update.index(rule[1]):
+                            add_middle_page = False
+
+        if add_middle_page:
+            count += int(update[int((len(update) -1)/2)])
+
+    return count
+                            
+                    
+                
+                    
 
 
 
