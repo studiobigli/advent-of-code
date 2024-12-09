@@ -60,4 +60,4 @@ def part2():
 
 if __name__ == "__main__":
     print(f"Day 5 Part 1 Answer: {part1()["count"]}")
-    print(f"Day 5 Pat 2 Answer: {part2()}")
+    print(f"Day 5 Part 2 Answer: {part2()}")
